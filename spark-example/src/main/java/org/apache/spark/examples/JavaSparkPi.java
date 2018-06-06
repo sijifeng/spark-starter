@@ -33,7 +33,7 @@ public final class JavaSparkPi {
   public static void main(String[] args) throws Exception {
     SparkSession spark = SparkSession
       .builder()
-      .appName("JavaSparkPi")
+      .appName("JavaSparkPi").master("local")
       .getOrCreate();
 
     JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
@@ -53,7 +53,10 @@ public final class JavaSparkPi {
       return (x * x + y * y <= 1) ? 1 : 0;
     }).reduce((integer, integer2) -> integer + integer2);
 
+
     System.out.println("Pi is roughly " + 4.0 * count / n);
+
+    Thread.sleep(10000);
 
     spark.stop();
   }
